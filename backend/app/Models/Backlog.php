@@ -8,6 +8,8 @@ use App\Models\User;
 
 class Backlog extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['utilisateur_id', 'jeu_id', 'statut'];
 
     public function utilisateur()

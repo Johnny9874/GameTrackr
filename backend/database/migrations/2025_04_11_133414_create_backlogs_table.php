@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('backlogs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('utilisateur_id');
-            $table->unsignedBigInteger('jeu_id');
+            $table->foreignId('utilisateur_id')->constrained('users');
+            $table->foreignId('jeu_id')->constrained('jeux');
             $table->string('statut');
             $table->timestamps();
 

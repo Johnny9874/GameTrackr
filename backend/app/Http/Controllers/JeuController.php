@@ -27,4 +27,37 @@ class JeuController extends Controller
         $jeu = \App\Models\Jeu::create($request->all());
         return response()->json($jeu, 201); // 201 = Created
     }
+
+    public function update(Request $req, $id)
+    {
+        $jeu = Jeu::find($id);
+
+        if (!$jeu) {
+            return response()->json(['error' => 'Jeu non trouvé'], 404);
+        }
+
+        $jeu->titre = $req->titre;
+        $jeu->temps_estime = $req->temps_estime;
+        $jeu->prix_achat = $req->prix_achat;
+
+        $result = $jeu->save();
+
+        if ($result) {
+            return response()->json(['message' => 'Jeu mis à jour avec succès']);
+        } else {
+            return response()->json(['message' => 'Échec de la mise à jour'], 500);
+        }
+    }
+
+    public function delete($id) {
+        $jeu = Jeu::find($id);
+
+        if (!$jeu) {
+            return response()->json(['error' => 'Jeu non trouvé'], 404);
+        }
+
+        $result = $jeu->delete();
+
+        return response()->json(['message' => 'Jeu supprimé avec succès'], 200);
+    }
 }
