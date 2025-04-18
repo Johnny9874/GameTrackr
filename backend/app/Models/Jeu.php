@@ -36,8 +36,8 @@ class Jeu extends Model
         return $this->belongsToMany(Plateforme::class);
     }
 
-    public function backlog()
+    public function backlogs()
     {
-        return $this->hasOne(Backlog::class);
+        return $this->hasMany(Backlog::class);
     }
 }

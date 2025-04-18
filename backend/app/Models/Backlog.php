@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Jeu;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class Backlog extends Model
 {
