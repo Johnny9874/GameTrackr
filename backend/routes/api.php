@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JeuController;
 use App\Http\Controllers\BacklogController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\CommentaireController;
+use App\Http\Controllers\LogController;
 // --- Jeux ---
 Route::get('/jeux', [JeuController::class, 'index']);
 Route::get('/jeux/{id}', [JeuController::class, 'show']);
@@ -26,3 +28,9 @@ Route::get('/utilisateurs/{id}/jeux', [JeuController::class, 'jeuxParUtilisateur
 
 Route::post('/sessions', [SessionController::class, 'store']);
 Route::get('/sessions', [SessionController::class, 'index']);
+
+Route::get('/commentaires', [CommentaireController::class, 'index']);
+Route::post('/commentaires', [CommentaireController::class, 'store']);
+
+Route::get('/logs', [LogController::class, 'index']);
+Route::post('/logs', [LogController::class, 'store']);
