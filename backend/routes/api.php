@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JeuController;
 use App\Http\Controllers\BacklogController;
-
+use App\Http\Controllers\SessionController;
 // --- Jeux ---
 Route::get('/jeux', [JeuController::class, 'index']);
 Route::get('/jeux/{id}', [JeuController::class, 'show']);
@@ -24,3 +24,5 @@ Route::get('/utilisateurs/{id}/backlog/statut/{statut}', [BacklogController::cla
 Route::get('/utilisateurs/{id}/jeux', [JeuController::class, 'jeuxParUtilisateur']);
 
 
+Route::post('/sessions', [SessionController::class, 'store']);
+Route::get('/sessions', [SessionController::class, 'index']);
