@@ -6,18 +6,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\Jeu; 
+
 use App\Models\Backlog;
 
-class User extends Authenticatable
-{
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+class User extends Authenticatable {
+    
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
+     * Les attributs qui peuvent être assignés en masse.
+     * (Utilisés lors de la création ou mise à jour d'un utilisateur)
      */
     protected $fillable = [
         'name',
@@ -26,9 +24,8 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
+     * Les attributs masqués dans les réponses JSON.
+     * (Par sécurité, le mot de passe et le token de session ne doivent pas être exposés)
      */
     protected $hidden = [
         'password',
@@ -36,9 +33,9 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
+     * Les types de données à caster automatiquement.
+     * - Le champ `email_verified_at` est casté en DateTime
+     * - Le mot de passe est automatiquement hashé
      */
     protected function casts(): array
     {
@@ -46,5 +43,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+
+    /**
+     * Relation : un utilisateur peut avoir plusieurs jeux dans son backlog.
+     */
+    public function backlogs() {
+        return $this->hasMany(Backlog::class);
     }
 }
