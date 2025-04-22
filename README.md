@@ -151,3 +151,7 @@ Tableau de bord utilisateur
 Statistiques et graphiques d’analyse
 
 Version front-end avec React
+<<<<<<< HEAD
+=======
+
+>>>>>>> 20d3eb994c15a06813c0bc7051c5e360e0c76c73
