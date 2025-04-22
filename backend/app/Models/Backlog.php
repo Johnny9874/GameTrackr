@@ -12,13 +12,16 @@ class Backlog extends Model
 {
     use HasFactory;
 
+    // Champs pouvant être remplis en masse (mass assignment)
     protected $fillable = ['utilisateur_id', 'jeu_id', 'statut'];
 
+    // Relation : un backlog appartient à un utilisateur
     public function utilisateur()
     {
         return $this->belongsTo(User::class);
     }
 
+    // Relation : un backlog appartient à un jeu
     public function jeu()
     {
         return $this->belongsTo(Jeu::class);
