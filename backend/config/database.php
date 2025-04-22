@@ -115,8 +115,7 @@ return [
         // Configuration personnalisée pour MongoDB (utilisée avec jenssegers/mongodb)
         'mongodb' => [
             'driver' => 'mongodb',      // Utilise le driver MongoDB spécifique au package
-            'host' => env('DB_MONGO_HOST', '127.0.0.1'),     // Hôte MongoDB (par défaut local)
-            'port' => env('DB_MONGO_PORT', 27017),  // Port par défaut de MongoDB
+            'dsn' => env('DB_MONGO_DSN'),
             'database' => env('DB_MONGO_DATABASE'),     // Nom de la base Mongo, défini dans .env
         ],
 
