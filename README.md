@@ -1,21 +1,25 @@
-# GameTrackr 🎮
+# 🎮 GameTrackr
 
-GameTrackr est une application web permettant aux utilisateurs de suivre leur temps de jeu, leur backlog, leurs achats de jeux et leurs interactions. Elle repose sur une architecture hybride : base de données relationnelle **MySQL** pour la gestion des entités principales (jeux, utilisateurs, backlogs) et **MongoDB** pour les données dynamiques (sessions de jeu, commentaires, logs).
+GameTrackr est une application web permettant aux utilisateurs de suivre leur temps de jeu, leur backlog, leurs achats de jeux et leurs interactions.  
+Elle repose sur une architecture hybride :
+
+- **Base SQL (MySQL)** pour les données relationnelles (jeux, utilisateurs, backlogs, genres, plateformes)
+- **Base NoSQL (MongoDB)** pour les données dynamiques (sessions de jeu, commentaires, logs)
 
 ---
 
-## 🧱 Stack technique
+## ⚙️ Stack technique
 
 - **Laravel 12**
-- **MySQL** pour les données relationnelles
-- **MongoDB** pour les données non-relationnelles
 - **PHP 8.2**
-- **Postman** pour les tests d'API
-- **MongoDB Compass** pour la visualisation des collections
+- **MySQL (Railway)**
+- **MongoDB (Atlas / Compass)**
+- **Postman** (tests d’API)
+- **MongoDB Compass** (visualisation)
 
 ---
 
-## 📦 Installation
+## 🚀 Installation
 
 ### 1. Cloner le projet
 
@@ -23,131 +27,174 @@ GameTrackr est une application web permettant aux utilisateurs de suivre leur te
 git clone https://github.com/votre-utilisateur/GameTrackr.git
 cd GameTrackr/backend
 ```
-
-2. Installer les dépendances PHP
+2. Installer les dépendances
 
 ```bash
-
 composer install
 ```
 
-3. Configurer l’environnement
+4. Configuration de l’environnement
 
-Créer un fichier .env :
+Créer le fichier .env :
 
 ```bash
 cp .env.example .env
 ```
 
-Configurer les bases de données dans .env :
+Configurer MySQL et MongoDB :
+
+# Base SQL
 
 ```bash
-DB_CONNECTION=mongodb
-DB_MONGO_HOST=127.0.0.1
-DB_MONGO_PORT=27017
-DB_MONGO_DATABASE=gametrackr
-
-# Pour MySQL
-DB_CONNECTION_MYSQL=mysql
-DB_HOST=127.0.0.1
+DB_CONNECTION=mysql
+DB_HOST=mysql.railway.internal
 DB_PORT=3306
-DB_DATABASE=gametrackr
+DB_DATABASE=railway
 DB_USERNAME=root
-DB_PASSWORD=
+DB_PASSWORD=********
 ```
 
-4. Générer la clé d’application
+# Base NoSQL
+
+```bash
+DB_MONGO_DSN=mongodb+srv://<username>:<password>@gametrackr-cluster.mongodb.net/gametrackr
+DB_MONGO_DATABASE=gametrackr
+```
+
+4. Générer la clé d'application
 
 ```bash
 php artisan key:generate
 ```
 
-5. Lancer le serveur
-
+5. Lancer le serveur local
+   
 ```bash
 php artisan serve
 ```
 
-📂 Structure des données
+🧱 Architecture technique
 
-🔗 Base MySQL
-Users
+🗄️ Base de données relationnelle (MySQL)
 
-Jeux
+🔌 Hébergement
+Railway.app
 
-Backlogs
+Connexion automatique via .env
 
-Genres
+Migrations exécutées avec :
 
-Plateformes
+```bash
+php artisan migrate
+```
 
-Relations :
+📋 Tables
 
-Un utilisateur peut avoir plusieurs jeux via la table de backlogs
+Table	Description
+users	Données des utilisateurs
+jeux	Liste des jeux avec date, prix, durée estimée
+backlogs	Statut des jeux ajoutés par utilisateur
+genres	Catégories de jeux
+plateformes	Plateformes de jeux
+jeu_genre	Table pivot (Many-to-Many)
+jeu_plateforme	Table pivot (Many-to-Many)
 
-Un jeu appartient à plusieurs genres et plateformes
+🔁 Exemple d'insertion (Postman)
+POST http://127.0.0.1:8000/api/jeux
 
-🧪 Base MongoDB
-sessions : historiques de jeu (GameSession)
+```bash
+{
+  "titre": "Zelda",
+  "temps_estime": 30,
+  "prix_achat": 59.99,
+  "date_achat": "2025-04-01",
+  "utilisateur_id": 1
+}
+```
 
-commentaires : retours utilisateurs (Commentaire)
+🍃 Base de données NoSQL (MongoDB)
 
-logs : événements ou actions système (Log)
+🌍 Connexion
 
+Hébergeur : MongoDB Atlas
 
-🔁 API endpoints
+Client local : MongoDB Compass
 
-🎮 Jeux
-GET /api/jeux
+DSN (exemple) :
 
-GET /api/jeux/{id}
+```bash
+DB_MONGO_DSN=mongodb+srv://<username>:<password>@gametrackr-cluster.mongodb.net/gametrackr
+```
 
-POST /api/jeux
+📁 Collections
 
-PUT /api/jeux/{id}
+Collection	Description
+sessions	Historique des sessions de jeu (GameSession)
+commentaires	Avis et notes utilisateurs (Commentaire)
+logs	Journaux système/actions utilisateur (Log)
 
+🔁 Exemple d'insertion (Tinker)
+
+```bash
+\App\Models\GameSession::create([
+    'utilisateur_id' => 1,
+    'jeu_id' => 1,
+    'duree' => 45,
+    'date_session' => now()
+]);
+```
+
+🔀 Endpoints API REST
+
+🎮 Jeux (MySQL)
+
+```bash
+GET    /api/jeux
+GET    /api/jeux/{id}
+POST   /api/jeux
+PUT    /api/jeux/{id}
 DELETE /api/jeux/{id}
+GET    /api/utilisateurs/{id}/jeux
+```
 
-GET /api/utilisateurs/{id}/jeux
+📚 Backlog (MySQL)
 
-📚 Backlogs
-POST /api/backlog
-
-GET /api/utilisateurs/{id}/backlog
-
-PUT /api/backlog/{id}/statut
-
-PUT /api/utilisateurs/{id}/backlog
-
+```bash
+POST   /api/backlog
+GET    /api/utilisateurs/{id}/backlog
+PUT    /api/backlog/{id}/statut
+PUT    /api/utilisateurs/{id}/backlog
 DELETE /api/backlog/{id}
+GET    /api/utilisateurs/{id}/backlog/statut/{statut}
+```
 
-GET /api/utilisateurs/{id}/backlog/statut/{statut}
+⏱ Sessions de jeu (MongoDB)
 
-⏱️ Sessions de jeu (MongoDB)
-POST /api/sessions
-
-GET /api/sessions
+```bash
+POST   /api/sessions
+GET    /api/sessions
+```
 
 💬 Commentaires (MongoDB)
-POST /api/commentaires
 
-GET /api/commentaires
+```bash
+POST   /api/commentaires
+GET    /api/commentaires
+```
 
 📝 Logs (MongoDB)
-POST /api/logs
 
-GET /api/logs
+```bash
+POST   /api/logs
+GET    /api/logs
+```
+
+🧠 MCD (Modèle Conceptuel de Données) : 
+![MCD gametrackr](https://github.com/user-attachments/assets/3b7bd76f-3147-4b54-a4da-7d4a45a270f0)
 
 ✅ Tests
-Toutes les routes ont été testées avec Postman (requêtes GET/POST).
+Toutes les routes ont été testées avec Postman
 
-Les collections MongoDB ont été vérifiées avec Compass et Tinker (php artisan tinker).
+Les collections MongoDB vérifiées via Compass
 
-✨ À venir
-Authentification & sécurité (JWT)
-
-Tableau de bord utilisateur
-
-Statistiques et graphiques d’analyse
-
-Version front-end avec React
+Données insérées avec Tinker (artisan)
