@@ -198,3 +198,31 @@ Toutes les routes ont été testées avec Postman
 Les collections MongoDB vérifiées via Compass
 
 Données insérées avec Tinker (artisan)
+
+Jusque ici, on a travaillé sur le coté backend de GameTrackr, on va maintenant passer sur le front !
+
+Pour ça, j'ai commencé par initialisé mon projet vite avec :
+
+```bash
+npm create vite@latest frontend -- --template react
+cd frontend
+npm install
+npm run dev
+```
+
+Puis j'ai ajouté un router :
+
+```bash
+npm install react-router-dom
+```
+
+Et j'ai crée mon premier router dans main.jsx
+
+Pour la connexion avec le back-end, je vais utiliser axios via la commande : 
+
+```bash 
+npm install axios
+```
+
+J'ai par la suite crée une navbar reactive pour pc et mobile afin de naviguer plus facilement entre les différentes page de l'application.
+

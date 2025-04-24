@@ -1,5 +1,9 @@
 function Home() {
-    return <h1>Bienvenue sur GameTrackr !</h1>
+    return (
+    <section>
+      <h1>Bienvenue sur GameTrackr</h1>
+    </section>
+    );
   }
   
   export default Home
