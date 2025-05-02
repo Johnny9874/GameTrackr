@@ -1,7 +1,13 @@
+import Description from "../components/Description";
+import SearchBar from "../components/SearchBar";
+import GameSuggestion from "../components/GameSuggestions";
+
 function Home() {
     return (
     <section>
-      <h1>Bienvenue sur GameTrackr</h1>
+      <Description />
+      <SearchBar />
+      <GameSuggestion />
     </section>
     );
   }
